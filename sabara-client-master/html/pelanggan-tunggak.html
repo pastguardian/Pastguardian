@@ -1,0 +1,129 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(3)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-5">
+									<div class="well" data-ng-show="needUnit()">
+										<form role="form" class="form-horizontal" name="formesm">
+											<div class="form-group">
+												<label for="e-unit" class="col-md-1 control-label">UNIT:</label>
+												<div class="col-md-4">
+													<select name="unit" id="e-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="tunggak.unit">
+														<option value="0">-- pilih unit --</option>
+													</select>
+												</div>
+												<label for="e-keyword" class="col-md-1 control-label">RBM</label>
+												<div class="col-md-4">
+													<input type="text" name="keyword" id="e-keyword" class="form-control" data-ng-model="tunggak.keyword" placeholder="nama rbm">
+												</div>
+												<div class="col-md-1">
+													<button class="btn btn-primary" data-ng-click="loadRbm()"><i class="fa fa-fw fa-search"></i></button>
+												</div>
+											</div>
+										</form>
+									</div>
+									<table class="table table-striped table-bordered table-condensed small" data-ng-show="rbmList.length > 0">
+										<thead>
+											<tr>
+												<th>RBM</th>
+												<th>PETUGAS</th>
+												<th>PLGN</th>
+												<th>RPTAG</th>
+												<th>RPBK</th>
+												<th>AKSI</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="c in rbmList">
+												<td>{{c.rbm}}</td>
+												<td>{{c.petugas}}</td>
+												<td>{{c.pelanggan}}</td>
+												<td>{{c.rptag}}</td>
+												<td>{{c.rpbk}}</td>
+												<td>
+													<div class="btn-group btn-group-xs">
+														<button class="btn" title="detail" data-ng-click="loadDetail(c.rbm)"><i class="fa fa-search"></i></button>
+														<a href="" class="btn btn-xs btn-info tooltips" title="peta" load-map2="{{c.rbm}}" data-container="map-container"><i class="fa fa-map-marker"></i></a>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<ul class="pager" data-ng-show="rbmList.length > 0">
+										<li data-ng-class="{ disabled: tunggak.cpage == 0 }"><a href="" data-ng-click="setPrevious()" data-ng-disabled="tunggak.cpage == 0"><span class="icon-prev"></span> Sebelumnya</a></li>
+										<li data-ng-class="{ disabled: rbm.tunggak == numpage - 1 }"><a href="" data-ng-click="setNext()" data-ng-disabled="tunggak.cpage == numpage - 1">Berikutnya <span class="icon-next"></span></a></li>
+									</ul>
+								</div>
+								<div class="col-md-7">
+									<div data-ng-show="showDetail">
+										<h5 class="text-muted">Rincian Data Tagih RBM</h5>
+										<hr>
+										<table class="table table-bordered table-condensed table-striped small" data-ng-show="listDetail.length > 0">
+											<thead>
+												<tr>
+													<th>IDPEL</th>
+													<th>NAMA</th>
+													<th>ALAMAT</th>
+													<th>TARIF/DAYA</th>
+													<th>LEMBAR</th>
+													<th>RPTAG</th>
+													<th>RPBK</th>
+													<th>AKSI</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr data-ng-repeat="c in listDetail">
+													<td>{{c.idpel}}</td>
+													<td>{{c.nama}}</td>
+													<td>{{c.alamat}}</td>
+													<td>{{c.td}}</td>
+													<td>{{c.lembar}}</td>
+													<td>{{c.rptag}}</td>
+													<td>{{c.rpbk}}</td>
+													<td>
+														<div class="btn-group btn-group-xs">
+															<button class="btn btn-info" title="set cetak" data-ng-show="c.status == 0" data-ng-click="setCetakLunas($index, 1)"><i class="fa fa-print"></i></button>
+															<button class="btn btn-danger" title="set lunas" data-ng-show="c.status == 1" data-ng-click="setCetakLunas($index, 2)"><i class="fa fa-money"></i></button>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div>
+										<h5 class="text-muted">
+											<i class="fa fa-fw fa-angle-right"></i> Peta Pelanggan Nunggak
+											<a href="" id="link-map-open" target="_blank" data-ng-disabled="koordinat.center.length == 0" class="btn btn-xs btn-primary pull-right"><i class="fa fa-fw fa-search-plus"></i> Lebih Besar</a>
+										</h5>
+										<hr>
+										<div class="well">
+											<div id="map-container" class="map"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="spacer-h"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
